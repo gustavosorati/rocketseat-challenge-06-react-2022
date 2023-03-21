@@ -1,4 +1,12 @@
 import Head from 'next/head'
+import Image from 'next/image'
+
+import { SignInButton } from '@/components/SignInButton'
+
+import logoSVG from '../../aseets/logo.svg'
+import * as Styled from './styles'
+
+import { providerSchema } from './utils/providers-schema'
 
 export default function Home() {
   return (
@@ -10,9 +18,31 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <div>
-        Home Teste
-      </div>
+      <Styled.Container>
+        <Styled.Banner>
+          <Image 
+            src={logoSVG} 
+            alt="Image de um livro e ao lado o título: Book Wise" 
+          />
+        </Styled.Banner>
+        
+        <Styled.Content>
+          <div className='group'>
+            <div className="header">
+              <h1>Boas vindas!</h1>
+              <p>Faça seu login ou acesse como visitante.</p>
+            </div>
+            
+            {providerSchema.map(provider => (
+              <SignInButton 
+                key={provider.id} 
+                text={provider.text} 
+                imgsrc={provider.icone} 
+              />
+            ))}
+          </div>
+        </Styled.Content>
+      </Styled.Container>
     </>
   )
 }
