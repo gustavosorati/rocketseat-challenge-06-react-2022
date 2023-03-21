@@ -9,23 +9,12 @@ export const Container = styled("div", {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  gap: '2rem',
+  gap: '6rem',
   padding: "20px"
 })
 
-export const Banner = styled("div", {
-  width: "598px",
-  height: "100%",
-  backgroundImage: "url(/images/hero.png)",
-  backgroundSize: "cover",
-  borderRadius: '10px',
-
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center"
-})
-
 export const Content = styled("div", {
+  background: 'red',
   flex: 1,
   display: "flex",
   flexDirection: "column",
@@ -40,7 +29,5 @@ export const Content = styled("div", {
     '.header': {
       marginBottom: '24px'
     }
-  },
-
-  
+  }, 
 })

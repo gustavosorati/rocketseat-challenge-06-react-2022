@@ -1,11 +1,11 @@
-import * as Styled from "./styles";
-
-import logoSvg from '../../aseets/logo.svg'
-import Image from "next/image";
 import Link from "next/link";
-import { ChartLineUp, Binoculars, SignIn } from "@phosphor-icons/react";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { theme } from '@/styles/stitches.config';
+
+import logoSvg from '../../aseets/logo.svg'
+import { ChartLineUp, Binoculars, SignIn } from "@phosphor-icons/react";
+import * as Styled from "./styles";
 
 export function Navbar() {
   const router = useRouter()
