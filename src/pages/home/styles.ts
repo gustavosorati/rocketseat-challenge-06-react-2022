@@ -1,10 +1,10 @@
 import { styled } from "@/styles/stitches.config";
 
-
 export const Container = styled("div", {
+  maxWidth: '1440px',
   width: "100%",
   height: "100vh",
-  backgroundColor: "$gray800",
+  margin: '0 auto',
 
   display: "flex",
   alignItems: "center",
@@ -13,21 +13,52 @@ export const Container = styled("div", {
   padding: "20px"
 })
 
-export const Content = styled("div", {
-  background: 'red',
+export const Content = styled("section", {
   flex: 1,
+  height: '100%',
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
+  padding: '55px 0',
 
-  '.group': {
-    display: "flex",
-    flexDirection: "column",
-    gap: '1rem',
+  '> .header': {
+    marginBottom: '$10',
+    display: 'flex',
+    alignItems: 'center',
+    gap: "$3",
 
-    '.header': {
-      marginBottom: '24px'
+    'h2': {
+      color: '$gray100'
     }
-  }, 
+  },
+
+  '.sections': {
+    display: 'flex',
+    gap: '64px'
+  }
+})
+
+export const BooksContent = styled('div', {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  gap: "1rem",
+
+  'h6': {
+    fontWeight: 400,
+    fontSize: "$sm"
+  }
+})
+
+export const Aside = styled('aside', {
+  height: '100%',
+  width: '324px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+
+  '.header': {
+    display: 'flex',
+    alignItems: "center",
+    justifyContent: "space-between"
+  }
 })
