@@ -8,10 +8,13 @@ import { ChartLine } from '@phosphor-icons/react';
 import { Card } from '@/components/Card';
 import Link from 'next/link';
 import { ShyCard } from '@/components/Book/ShyCard';
+import { useSession } from 'next-auth/react';
 
 export default function Home() {
   const { colors } = theme
-
+  const session = useSession();
+  
+  console.log(session)
   return (
     <>
       <Head>
@@ -39,11 +42,11 @@ export default function Home() {
               <Card />
             </Styled.BooksContent>
 
-            <Styled.Aside>
+            {/* <Styled.Aside>
               <div className="header">
                 <h5>Livros populares</h5>
 
-                <Link href="#">Ver todos</Link>
+                <Link href="/">Ver todos</Link>
               </div>
 
               <ShyCard />
@@ -51,7 +54,7 @@ export default function Home() {
               <ShyCard />
               
               <ShyCard />
-            </Styled.Aside>
+            </Styled.Aside> */}
           </div>
         </Styled.Content>
 

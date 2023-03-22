@@ -1,3 +1,4 @@
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import { ComponentProps } from "react";
 
@@ -10,8 +11,9 @@ type Props = ComponentProps<typeof Styled.Container> & {
 }
 
 export function SignInButton({ text, imgsrc, ...rest}: Props) {
+  
   return (
-    <Styled.Container {...rest}>
+    <Styled.Container type="button" {...rest}>
       <Image
         src={imgsrc}
         alt="google"
