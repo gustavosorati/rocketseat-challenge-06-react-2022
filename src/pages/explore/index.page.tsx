@@ -7,7 +7,7 @@ import { bookFilters } from './utils/books-filters';
 import { useState } from 'react';
 import { BookCardReduce } from '@/components/Book/BookCardReduce';
 import { recentReviews } from '../home/utils/book';
-
+import { SearchInput } from '@/components/SearchInput';
 
 export default function Explore() {
   const [filterSelected, setFilterSelected] = useState('Tudo')
@@ -29,6 +29,10 @@ export default function Explore() {
           <h1>Explorar</h1>
         </Styled.Header>
 
+        <Styled.Search >
+          <SearchInput placeholder='Buscar livro ou autor' />
+        </Styled.Search>
+        
         {/* Filters */}
         <Styled.FiltersContainer>
           {bookFilters.map(filter => (

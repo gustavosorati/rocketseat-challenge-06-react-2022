@@ -12,6 +12,7 @@ export const LayoutContainer = styled("div", {
   padding: "20px",
 
   '> div': {
-    flex: 1
+    flex: 1,
+    position: 'relative'
   }
 })

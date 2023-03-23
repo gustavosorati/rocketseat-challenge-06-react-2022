@@ -1,3 +1,4 @@
+import { SearchInput } from "@/components/SearchInput"
 import { styled } from "@/styles/stitches.config"
 
 export const Container = styled("div", {
@@ -12,7 +13,8 @@ export const Container = styled("div", {
 })
 
 export const Header = styled('header', {
-  margin: '55px 0 40px 0',
+  marginTop: '55px',
+  marginBottom: '70px',
   display: 'flex',
   alignItems: 'center',
   gap: "$3",
@@ -26,8 +28,7 @@ export const FiltersContainer = styled('div', {
   width: '100%',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
-  gap: '$2',
+  gap: '$4',
   marginBottom: '48px'
 })
 
@@ -66,4 +67,11 @@ export const ExplorerBooks = styled('section', {
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 1fr)',
   gap: '20px'
+})
+
+export const Search = styled('div', {
+  width: '433px',
+  position: 'absolute',
+  top: '51px',
+  right: 0,
 })
