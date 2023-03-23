@@ -47,6 +47,7 @@ export function Navbar() {
           src={logoSvg}
           alt="Book Wise"
           width={128}
+          loading="lazy"
         />
       </NextLink>
 

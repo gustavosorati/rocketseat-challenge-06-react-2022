@@ -40,6 +40,7 @@ export function BookCardWithPost({publication}: Props) {
           alt={book.title}
           width={108}
           height={152}
+          loading="lazy"
         />
 
         <Description>

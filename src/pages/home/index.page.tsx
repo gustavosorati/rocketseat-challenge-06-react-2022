@@ -11,12 +11,9 @@ import { books, recentReviews } from './utils/book';
 import { LatestLibrary } from './components/LatestLibrary';
 import { PopularLibrary } from './components/PopularLibrary';
 
-
-
 export default function Home() {
   const { colors } = theme
   const {data} = useSession();
-
   
   return (
     <>

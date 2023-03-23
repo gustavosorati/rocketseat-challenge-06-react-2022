@@ -74,4 +74,34 @@ export const recentReviews = [
       publised_at: 'Hoje'
     }
   },
+  {
+    id: 4,
+    book: {
+      title: "Refatoração",
+      cover: "/images/books/refatoracao.png",
+      author: "Aditya Bhargava",
+      publised_at: "4",
+      description: "Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectu",
+      rating: 3,
+    },
+    post: {
+      author: 'Jaxson Dias',
+      publised_at: 'Hoje'
+    }
+  },
+  {
+    id: 5,
+    book: {
+      title: "O Hobbit",
+      cover: "/images/books/o-hobbit.png",
+      author: "Token",
+      publised_at: "4",
+      description: "Nec tempor nunc in egestas. Euismod nisi eleifend at et in sagittis. Penatibus id vestibulum imperdiet a at imperdiet lectu",
+      rating: 3,
+    },
+    post: {
+      author: 'Jaxson Dias',
+      publised_at: 'Hoje'
+    }
+  },
 ]

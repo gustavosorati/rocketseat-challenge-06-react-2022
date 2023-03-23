@@ -19,6 +19,7 @@ export function SignInButton({ text, imgsrc, ...rest}: Props) {
         alt="google"
         width={32}
         height={32}
+        loading="lazy"
       />
 
       Entrar com {text}
