@@ -1,44 +1,84 @@
-import Link from "next/link";
+import NextLink from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { theme } from '@/styles/stitches.config';
 
 import logoSvg from '../../aseets/logo.svg'
-import { ChartLineUp, Binoculars, SignIn } from "@phosphor-icons/react";
+import { ChartLineUp, Binoculars, User } from "@phosphor-icons/react";
 import * as Styled from "./styles";
+import { ProfileOrSignIn } from "./components/ProfileOrSignIn";
+import { Link } from "./components/Link";
+import { ModalSignIn } from "../ModalSignIn";
+import { useState } from "react";
+import { useSession } from "next-auth/react";
+
+
+const publicLinks = [
+  {
+    id: 1,
+    text: 'Início',
+    href: "/home",
+    icon: <ChartLineUp size={24} />
+  },
+  {
+    id: 2,
+    text: 'Explorar',
+    href: "/explore",
+    icon: <Binoculars size={24} />
+  }
+]
+
+const protectedLinks = [
+  {
+    id: 1,
+    text: 'Perfil',
+    href: "/profile",
+    icon: <User size={24} />
+  },
+]
 
 export function Navbar() {
-  const router = useRouter()
-  const { colors } = theme
-  
+  const [isActiveModal, setIsModalActive] = useState(false);
+  const session = useSession();
+
   return (
     <Styled.Container>
-      <Link href="/home" className="logo">
+      {/* Logo */}
+      <NextLink href="/home" className="logo">
         <Image
           src={logoSvg}
-          alt=""
+          alt="Book Wise"
           width={128}
         />
-      </Link>
+      </NextLink>
 
-      <Styled.Link href="/home"
-        active={router.pathname.includes('/home')}  
-      >
-        <ChartLineUp size={24} />
-        Início
-      </Styled.Link>
+      <Styled.Navigation>
+        {publicLinks.map(link => (
+          <Link 
+            key={link.id}
+            text={link.text}
+            href={link.href}
+            icon={link.icon}
+          />
+        ))}
 
-      <Styled.Link href="/explore" 
-        active={router.pathname.includes('/explore')}
-      >
-        <Binoculars size={24} />
-        Explorar
-      </Styled.Link>
+        {session?.data?.user 
+          && protectedLinks.map(link => (
+            <Link 
+              key={link.id}
+              text={link.text}
+              href={link.href}
+              icon={link.icon}
+            />
+        ))}
+      </Styled.Navigation>
 
-      <Styled.SignIn>
-        Fazer Login
-        <SignIn size={20} color={colors.green100.value} />
-      </Styled.SignIn>
+      <ProfileOrSignIn
+        setIsActive={setIsModalActive}
+      />
+        
+      <ModalSignIn 
+        isActive={isActiveModal} 
+        setIsActive={setIsModalActive} 
+      />    
     </Styled.Container>
   )
 }

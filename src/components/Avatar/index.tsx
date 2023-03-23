@@ -1,12 +1,13 @@
 import * as Styled from './styles'
-import avatarImg from '../../aseets/temp/avatar.png'
+import { ComponentProps } from 'react'
 
-export function AvatarPicture() {
+type Props = ComponentProps<typeof Styled.Image> & {}
+
+export function Avatar({...rest}: Props) {
   return (
     <Styled.Container>
       <Styled.Image
-        src={avatarImg}
-        alt="Nome do usuário"
+        {...rest}
       />
     </Styled.Container>
   )

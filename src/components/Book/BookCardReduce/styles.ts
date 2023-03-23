@@ -1,30 +1,24 @@
 import { styled } from "@/styles/stitches.config";
 
-export const Container = styled('div', {
+export const BookCardContainer = styled('div', {
+  position: 'relative',
   width: '100%',
-  height: '130px',
-  borderRadius: '8px',
   padding: '$5',
+  borderRadius: '8px',
   backgroundColor: '$gray700',
+
   display: 'flex',
-  flexDirection: 'column',
-  gap: '$8'
+  gap: '$5',
 })
 
 export const Content = styled('div', {
   width: '100%',
   display: 'flex',
-  gap: '20px',
-
-  '.description': {
-    fontSize: '$xs',
-    fontWeight: 400,
-    color: '$gray300',
-    lineHeight: '160%'
-  }
+  flexDirection: 'column',
+  justifyContent: 'space-between'
 })
 
-export const ContentHeader = styled('header', {
+export const Header = styled('header', {
   display: 'flex',
   flexDirection: 'column',
   marginBottom: '1.5rem',
@@ -40,4 +34,10 @@ export const ContentHeader = styled('header', {
     fontWeight: 400,
     color: '$gray400'
   },
+})
+
+export const Rate = styled('div', {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '$1'
 })
