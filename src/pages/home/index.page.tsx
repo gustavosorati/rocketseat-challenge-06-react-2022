@@ -15,6 +15,7 @@ export default function Home() {
   const { colors } = theme
   const {data} = useSession();
   
+  console.log(data)
   return (
     <>
       <Head>

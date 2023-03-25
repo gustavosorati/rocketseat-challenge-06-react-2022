@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { BookCardReduce } from '@/components/Book/BookCardReduce';
 import { recentReviews } from '../home/utils/book';
 import { SearchInput } from '@/components/SearchInput';
+import { BookDetailsModal } from '@/components/Modals/BookDetailsModal';
 
 export default function Explore() {
   const [filterSelected, setFilterSelected] = useState('Tudo')
@@ -54,6 +55,7 @@ export default function Explore() {
         </Styled.ExplorerBooks>
       </Layout>
 
+      <BookDetailsModal />
     </>
   )
 }
