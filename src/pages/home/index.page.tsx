@@ -10,12 +10,53 @@ import { ReadingList } from './components/ReadingList';
 import { books, recentReviews } from './utils/book';
 import { LatestLibrary } from './components/LatestLibrary';
 import { PopularLibrary } from './components/PopularLibrary';
+import { useEffect, useState } from 'react';
+import { api } from '@/services/http';
+import { IBook, IBookRating } from '@/interface/IBooks';
+import { IUser } from '@/interface/IUser';
+
+interface IBooksByRecentReview {
+  rating: IBookRating;
+  book: IBook;
+  user: IUser;
+}
+
+interface IRequestBooksByRecentReview {
+  reviews: (IBookRating & {
+    book: IBook
+    user: IUser;
+  })[]
+}
 
 export default function Home() {
-  const { colors } = theme
-  const {data} = useSession();
+  const { colors } = theme;
+  const { data } = useSession();
+  const [booksByRecentReview, setBooksByRecentReview] = useState<IBooksByRecentReview[]>([])
   
-  console.log(data)
+  useEffect(() => {
+    const getBooks = async () => {
+      const response = await api.get<IRequestBooksByRecentReview>(`/books/by-rating`)
+
+      const filteredBooks = response.data.reviews.map((review) => {
+        return {
+          rating: {
+            id: review.id,
+            book_id: review.book_id,
+            description: review.description,
+            rate: review.rate,
+            created_at: review.created_at
+          },
+          book: review.book,
+          user: review.user
+        }
+      })
+
+      setBooksByRecentReview(filteredBooks);
+    }
+
+    getBooks()
+  }, [])
+
   return (
     <>
       <Head>
@@ -45,16 +86,16 @@ export default function Home() {
 
             <LatestLibrary 
               title="Avaliações mais recentes"
-              publication={recentReviews}
+              reviews={booksByRecentReview}
             />
           </Styled.Center>
 
           <Styled.Aside>
-            <PopularLibrary
+            {/* <PopularLibrary
               title="Livros populares"
               urlReference="/"
               books={books}
-            />
+            /> */}
           </Styled.Aside>
 
         </Styled.Container>

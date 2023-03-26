@@ -1,26 +1,34 @@
-import { Header, LatestContainer } from "./styles";
+import { IUser } from "@/interface/IUser";
+import { IBook, IBookRating } from "@/interface/IBooks";
 
-import { IPostPreview } from "@/interface/IPost";
 import { BookCardWithPost } from "@/components/Book/BookCardWithPost";
 
-type Props = {
-  title: string
-  publication: IPostPreview[]
+import * as Styled from "./styles";
+
+interface Props {
+  title: string;
+  reviews: {
+    rating: IBookRating;
+    book: IBook;
+    user: IUser;
+  }[]
 }
 
-export function LatestLibrary({title, publication}: Props) {
+export function LatestLibrary({title, reviews}: Props) {
   return (
-    <LatestContainer>
-      <Header>
+    <Styled.LatestContainer>
+      <Styled.Header>
         <strong>{title}</strong>
-      </Header>
+      </Styled.Header>
 
-      {publication && publication.map(post => (
+      {reviews && reviews.map(post => (
         <BookCardWithPost
-          key={post.id}
-          publication={post}
+          key={post.rating.id}
+          book={post.book}
+          user={post.user}
+          rating={post.rating}
         />
       ))}
-    </LatestContainer>
+    </Styled.LatestContainer>
   )
 }

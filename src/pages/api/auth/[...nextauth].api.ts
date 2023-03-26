@@ -1,5 +1,4 @@
-import { prisma } from "@/services/database/prismadb"
-import PrismaAdapter from "@/utils/prisma/prisma-adapter"
+import PrismaAdapter from "@/services/database/prisma-adapter"
 import { NextApiRequest, NextApiResponse } from "next"
 import NextAuth, { NextAuthOptions } from "next-auth"
 import GithubProvider from "next-auth/providers/github"
