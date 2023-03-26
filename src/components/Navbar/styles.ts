@@ -2,10 +2,9 @@ import { styled } from "@/styles/stitches.config";
 
 export const Container = styled("nav", {
   width: "232px",
-  height: "calc(100%)",
+  height: "calc(100vh - 40px)",
   borderRadius: "12px",
-  position: "static",
-  left: 20,
+  
 
   backgroundImage: 'url(/images/menu-bg.png)',
   backgroundSize: 'cover',

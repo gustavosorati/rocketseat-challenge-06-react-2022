@@ -1,6 +1,5 @@
 import { ReactNode, useState } from "react";
-import { Navbar } from "../Navbar";
-import { ModalSignIn } from "../ModalSignIn";
+import { Navbar } from "../components/Navbar";
 import { LayoutContainer } from "./styles";
 
 interface Props {

@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Layout from "@/components/Layout";
+import Layout from "@/Layout";
 import * as Styled from './styles'
 import { User } from '@phosphor-icons/react';
 import { theme } from '@/styles/stitches.config';

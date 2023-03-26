@@ -5,7 +5,7 @@ import * as Styled from './styles'
 import { theme } from '@/styles/stitches.config';
 import { ChartLine } from '@phosphor-icons/react';
 import { useSession } from 'next-auth/react';
-import Layout from '@/components/Layout';
+import Layout from '@/Layout';
 import { ReadingList } from './components/ReadingList';
 import { books, recentReviews } from './utils/book';
 import { LatestLibrary } from './components/LatestLibrary';
