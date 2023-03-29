@@ -1,6 +1,5 @@
-import { ChartLineUp, Binoculars } from "@phosphor-icons/react";
 import { useRouter } from "next/router";
-import { ReactElement, ReactNode } from "react";
+import { ReactNode } from "react";
 import { LinkContainer } from "./styles";
 
 type Props = {

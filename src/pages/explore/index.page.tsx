@@ -1,18 +1,66 @@
 import Head from 'next/head'
-import Layout from "@/Layout";
-import * as Styled from './styles'
-import { Binoculars } from '@phosphor-icons/react';
-import { theme } from '@/styles/stitches.config';
-import { bookFilters } from './utils/books-filters';
-import { useState } from 'react';
-import { BookCardReduce } from '@/components/Book/BookCardReduce';
-import { recentReviews } from '../home/utils/book';
-import { SearchInput } from '@/components/SearchInput';
-import { BookDetailsModal } from '@/components/Modals/BookDetailsModal';
+import { ChangeEvent, ReactElement, useEffect, useState } from 'react';
+import DefaultLayout from '@/Layout';
+import { NextPageWithLayout } from '../_app.page';
 
-export default function Explore() {
-  const [filterSelected, setFilterSelected] = useState('Tudo')
-  const { colors } = theme
+import { SearchInput } from '@/components/SearchInput';
+
+import { Binoculars } from '@phosphor-icons/react';
+
+import * as S from './styles'
+import { theme } from '@/styles/stitches.config';
+import { IBaseBook, IBaseRating, IBookWithAverage } from '@/interface/IBooks';
+import { api } from '@/services/http';
+import { Filters } from './components/Filters';
+import { Loading } from '@/components/Generics/Loading';
+import { ExplorerBookCard } from '@/components/Book/ExplorerBookCard';
+
+interface IRequest {
+  books: IBaseBook;
+  ratings: IBaseRating[];
+}
+
+const ExplorePage: NextPageWithLayout = () => {
+  const [books, setBooks] = useState<IBookWithAverage[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [filterSelected, setFilterSelected] = useState('');
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    const getPopularBooks = async () => {
+      try {
+        setIsLoading(true);
+      
+        const query = filterSelected ? `filter=${filterSelected}` : '';
+        const response = await api.get<IRequest[]>(`/books?${query}`);
+
+        let filteredResponse = response.data.map(({books, ratings}) => {
+          const rate = ratings.reduce((acc, rating) => {
+            return acc += rating.rate;
+          }, 0);
+
+          return {
+            ...books,
+            average: Math.round(rate / ratings.length)
+          }
+        });
+
+        if(search.length > 0) {
+          filteredResponse = filteredResponse.filter(book => 
+            book.author.includes(search) || book.name.includes(search)
+          )
+        }
+      
+        setBooks(filteredResponse);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    getPopularBooks();
+  }, [filterSelected, search]);
 
   return (
     <>
@@ -23,39 +71,50 @@ export default function Explore() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <Layout>
-        {/* Header */}
-        <Styled.Header>
-          <Binoculars size={32} color={colors.green100.value} />
-          <h1>Explorar</h1>
-        </Styled.Header>
+      {/* Page */}
+      <div>
+        <S.Search>
+          <SearchInput 
+            placeholder='Buscar livro ou autor'
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </S.Search>
 
-        <Styled.Search >
-          <SearchInput placeholder='Buscar livro ou autor' />
-        </Styled.Search>
+        <Filters 
+          filterSelected={filterSelected} 
+          updateFilter={setFilterSelected} 
+        />
         
-        {/* Filters */}
-        <Styled.FiltersContainer>
-          {bookFilters.map(filter => (
-            <Styled.Filter
-              key={filter}
-              isSelected={filterSelected === filter}
-              onClick={() => setFilterSelected(filter)}
-            >
-              {filter}
-            </Styled.Filter>
-          ))}
-        </Styled.FiltersContainer>
+        {isLoading ? <Loading /> : (
+          <S.ExplorerBooks>
+            <>
+              {books && books.map(book => (
+                <ExplorerBookCard 
+                  key={book.id} 
+                  book={book} 
+                />
+              ))}
+            </>        
+          </S.ExplorerBooks>
+        )}
 
-        {/* Cards */}
-        <Styled.ExplorerBooks>
-          {recentReviews.map(pub => (
-            <BookCardReduce key={pub.id} book={pub.book} />
-          ))}
-        </Styled.ExplorerBooks>
-      </Layout>
-
-      <BookDetailsModal />
+      </div>
     </>
   )
 }
+
+ExplorePage.getLayout = (page: ReactElement) => {
+  const { colors } = theme;
+
+  return (
+    <DefaultLayout 
+      title='Explorar' 
+      icon={<Binoculars size={32} color={colors.green100.value} />}
+    >
+      {page}
+    </DefaultLayout>
+  )
+}
+
+export default ExplorePage;

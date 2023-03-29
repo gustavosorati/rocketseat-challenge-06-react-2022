@@ -3,9 +3,7 @@ import { MagnifyingGlass } from "@phosphor-icons/react";
 import { ComponentProps } from "react";
 import { Input, SearchContainer } from "./styles";
 
-type Props = ComponentProps<typeof Input> & {
-
-}
+type Props = ComponentProps<typeof Input> & {}
 
 export function SearchInput({...rest}: Props) {
   const { colors } = theme

@@ -1,20 +1,31 @@
-import { ReactNode, useState } from "react";
+import { ModalBookDetails } from "@/components/Modals/ModalBookDetails";
+import { ModalSignIn } from "@/components/Modals/ModalSignIn";
+import { useModal } from "@/hooks/useModal";
+import { ReactNode } from "react";
 import { Navbar } from "../components/Navbar";
-import { LayoutContainer } from "./styles";
+import * as S from "./styles";
 
 interface Props {
-  children: ReactNode
+  title: string;
+  icon: ReactNode;
+  children: ReactNode;
 }
-export default function Layout({ children }: Props) {
-
+export default function DefaultLayout({ title, icon, children }: Props) {
   return (
-    <LayoutContainer>
+    <S.Container>
       <Navbar />
 
-      <div>
-        {children}
-      </div>
+      <S.Content>
+        <S.Header>
+          {icon}
+          <h1>{title}</h1>
+        </S.Header>
 
-    </LayoutContainer>
+        {children}
+      </S.Content>
+
+      <ModalSignIn />
+      <ModalBookDetails />
+    </S.Container>
   )
 }

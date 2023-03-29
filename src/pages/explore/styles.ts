@@ -12,6 +12,13 @@ export const Container = styled("div", {
   marginBottom: '48px'
 })
 
+export const Search = styled('div', {
+  width: '433px',
+  position: 'absolute',
+  top: '51px',
+  right: 0,
+})
+
 export const Header = styled('header', {
   marginTop: '55px',
   marginBottom: '70px',
@@ -24,54 +31,8 @@ export const Header = styled('header', {
   }
 })
 
-export const FiltersContainer = styled('div', {
-  width: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '$4',
-  marginBottom: '48px'
-})
-
-export const Filter = styled('button', {
-  all: 'unset',
-  boxSizing: 'border-box',
-  borderRadius: 999,
-  border: '1.5px solid $purple100',
-  color: '$purple100',
-  padding: '4px 16px',
-  
-  cursor: 'pointer',
-  transition: 'all 200ms',
-
-  '&:hover': {
-    backgroundColor: '$purple200',
-    borderColor: '$purple200',
-    color: '$gray100'
-  },
-
-  variants: {
-    isSelected: {
-      true: {
-        backgroundColor: '$purple200',
-        borderColor: '$purple200',
-        color: '$gray100'
-      },
-      false: {
-        backgroundColor: 'transparent'
-      }
-    }
-  }
-})
-
 export const ExplorerBooks = styled('section', {
   display: 'grid',
   gridTemplateColumns: 'repeat(3, 1fr)',
   gap: '20px'
-})
-
-export const Search = styled('div', {
-  width: '433px',
-  position: 'absolute',
-  top: '51px',
-  right: 0,
 })

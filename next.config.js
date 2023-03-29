@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   pageExtensions: [ 'page.tsx', 'api.ts' ],
   images: {
-    domains: ['avatars.githubusercontent.com', 'images.unsplash.com']
+    domains: ['avatars.githubusercontent.com', 'images.unsplash.com', 'lh3.googleusercontent.com']
   }
 }
 

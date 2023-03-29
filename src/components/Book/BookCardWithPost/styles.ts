@@ -1,24 +1,5 @@
 import { styled } from "@/styles/stitches.config";
 
-export const BookContainer = styled('div', {
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '$8',
-
-  padding: '$6',
-  borderRadius: '8px',
-  backgroundColor: '$gray700',
-
-  transition: 'all 200ms',
-  cursor: 'pointer',
-  position: 'relative',
-
-  '&:hover': {
-    backgroundColor: '$gray600',
-  }
-})
-
 export const Header = styled('header', {
   display: 'flex',
   
@@ -26,6 +7,7 @@ export const Header = styled('header', {
 })
 
 export const Content = styled('div', {
+  width: '100%',
   display: 'flex',
   gap: '$8'
 })
@@ -37,6 +19,7 @@ export const Profile = styled('div', {
 })
 
 export const Description = styled('div', {
+  width: '100%',
   display: 'flex',
   flexDirection: 'column'
 })

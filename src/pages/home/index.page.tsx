@@ -1,62 +1,18 @@
 import Head from 'next/head'
+import { ReactElement} from 'react';
+import { NextPageWithLayout } from '../_app.page';
 
-import * as Styled from './styles'
+import DefaultLayout from '@/Layout';
+import { LatestRead } from './components/LatestRead';
+import { PopularBooks } from './components/PopularBooks';
+import { LatestRatings } from './components/LatestRatings';
 
-import { theme } from '@/styles/stitches.config';
 import { ChartLine } from '@phosphor-icons/react';
-import { useSession } from 'next-auth/react';
-import Layout from '@/Layout';
-import { ReadingList } from './components/ReadingList';
-import { books, recentReviews } from './utils/book';
-import { LatestLibrary } from './components/LatestLibrary';
-import { PopularLibrary } from './components/PopularLibrary';
-import { useEffect, useState } from 'react';
-import { api } from '@/services/http';
-import { IBook, IBookRating } from '@/interface/IBooks';
-import { IUser } from '@/interface/IUser';
 
-interface IBooksByRecentReview {
-  rating: IBookRating;
-  book: IBook;
-  user: IUser;
-}
+import * as S from './styles'
+import { theme } from '@/styles/stitches.config';
 
-interface IRequestBooksByRecentReview {
-  reviews: (IBookRating & {
-    book: IBook
-    user: IUser;
-  })[]
-}
-
-export default function Home() {
-  const { colors } = theme;
-  const { data } = useSession();
-  const [booksByRecentReview, setBooksByRecentReview] = useState<IBooksByRecentReview[]>([])
-  
-  useEffect(() => {
-    const getBooks = async () => {
-      const response = await api.get<IRequestBooksByRecentReview>(`/books/by-rating`)
-
-      const filteredBooks = response.data.reviews.map((review) => {
-        return {
-          rating: {
-            id: review.id,
-            book_id: review.book_id,
-            description: review.description,
-            rate: review.rate,
-            created_at: review.created_at
-          },
-          book: review.book,
-          user: review.user
-        }
-      })
-
-      setBooksByRecentReview(filteredBooks);
-    }
-
-    getBooks()
-  }, [])
-
+const HomePage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
@@ -66,41 +22,34 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <Layout>
-        
-        <Styled.Header>
-          <ChartLine size={32} color={colors.green100.value} />
-          <h1>Início</h1>
-        </Styled.Header>
+      {/* Page */}        
+      <S.Container>
+          
+        <S.Center>
+          <LatestRead title="Sua última leitura" urlReference="/profile" />
+          <LatestRatings title="Avaliações mais recentes"/>
+        </S.Center>
 
-        <Styled.Container>
-               
-          <Styled.Center>
-            {data?.user && (
-              <ReadingList 
-                title="Sua última leitura"
-                urlReference="/"
-                books={[books[0]]}
-              />
-            )}
+        <S.Aside>
+          <PopularBooks title="Livros populares" urlReference="/explore" />
+        </S.Aside>
 
-            <LatestLibrary 
-              title="Avaliações mais recentes"
-              reviews={booksByRecentReview}
-            />
-          </Styled.Center>
-
-          <Styled.Aside>
-            {/* <PopularLibrary
-              title="Livros populares"
-              urlReference="/"
-              books={books}
-            /> */}
-          </Styled.Aside>
-
-        </Styled.Container>
-
-      </Layout>
+      </S.Container>
     </>
   )
 }
+
+HomePage.getLayout = (page: ReactElement) => {
+  const { colors } = theme;
+
+  return (
+    <DefaultLayout 
+      title='Inicio' 
+      icon={<ChartLine size={32} color={colors.green100.value} />}
+    >
+      {page}
+    </DefaultLayout>
+  )
+}
+
+export default HomePage;

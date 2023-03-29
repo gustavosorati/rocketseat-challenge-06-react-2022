@@ -5,6 +5,7 @@ import { theme } from "@/styles/stitches.config";
 import { IUser } from '@/interface/IUser';
 import { IBook, IBookRating } from '@/interface/IBooks';
 
+import { Box } from '@/components/Box';
 import { Star } from '@/components/Start';
 import { Avatar } from '@/components/Avatar'
 
@@ -20,7 +21,7 @@ export function BookCardWithPost({book, rating, user}: Props) {
   const { colors } = theme;
 
   return (
-    <Styled.BookContainer>
+    <Box direction="column" padding={'md'}>
       <Styled.Header>
         <Styled.Profile>
           <Avatar 
@@ -48,7 +49,7 @@ export function BookCardWithPost({book, rating, user}: Props) {
 
         <Styled.Description>
 
-          <Styled.Title>{book.title}</Styled.Title>
+          <Styled.Title>{book.name}</Styled.Title>
           <Styled.Author>{book.author}</Styled.Author>
 
           <Styled.About>{book.summary}</Styled.About>
@@ -65,6 +66,6 @@ export function BookCardWithPost({book, rating, user}: Props) {
           )
         })}
       </Styled.Rate>
-    </Styled.BookContainer>
+    </Box>
   )
 }
