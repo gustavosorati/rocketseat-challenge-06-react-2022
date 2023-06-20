@@ -1,7 +1,5 @@
-import { getServerSession } from "next-auth";
 import { prisma } from "@/services/database/prismadb"
 import { NextApiRequest, NextApiResponse } from "next/types"
-import { buildNextAuthOptions } from "../auth/[...nextauth].api";
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,21 +9,11 @@ export default async function handler(
 		return res.status(405).end()
 	}
   
-  const session = await getServerSession(
-    req,
-    res,
-    buildNextAuthOptions(req, res),
-  );
-  
-  if(!session) {
-    return res.status(404).json({
-      message: 'User not autheticated.!'
-    })
-  }
+  const userId = req.query.user_id as string;
 
 	const ratings = await prisma.rating.findMany({
     where: {
-      user_id: session.id
+      user_id: userId
     },
     orderBy: [
       {
@@ -33,11 +21,23 @@ export default async function handler(
       }
     ],
     include: {
-      book: true
+      book: true,
     },
-    take: 10
+    take: 10,
   });
 
+  // const ratingsByDate = ratings.reduce((acc, rating) => {
+  //   const date = rating.created_at.toDateString();
+    
+  //   if (!acc[date]) {
+  //     acc[date] = [];
+  //   }
 
-	return res.status(200).json({ratings})
+  //   acc[date].push(rating);
+  //   return acc;
+  // }, []);
+
+  // console.log(ratingsByDate)
+
+	return res.status(200).json(ratings)
 }

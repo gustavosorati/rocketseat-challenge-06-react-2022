@@ -10,6 +10,8 @@ import { Star } from '@/components/Start';
 import { Avatar } from '@/components/Avatar'
 
 import * as Styled from './styles';
+import { publishedDateFormat } from '@/utils/published-date-format';
+import Link from 'next/link';
 
 interface Props {
   book: IBook;
@@ -19,6 +21,7 @@ interface Props {
 
 export function BookCardWithPost({book, rating, user}: Props) {
   const { colors } = theme;
+  const formated_date = publishedDateFormat(rating.created_at);
 
   return (
     <Box direction="column" padding={'md'}>
@@ -32,8 +35,8 @@ export function BookCardWithPost({book, rating, user}: Props) {
           />
 
           <div>
-            <Styled.Title>{user.name}</Styled.Title>
-            <Styled.PublishedAt>{user.created_at}</Styled.PublishedAt>
+            <Link href={`/profile/${user.id}`} ><Styled.Title>{user.name}</Styled.Title></Link>
+            <Styled.PublishedAt>{formated_date}</Styled.PublishedAt>
           </div>
         </Styled.Profile>
       </Styled.Header>
@@ -52,7 +55,7 @@ export function BookCardWithPost({book, rating, user}: Props) {
           <Styled.Title>{book.name}</Styled.Title>
           <Styled.Author>{book.author}</Styled.Author>
 
-          <Styled.About>{book.summary}</Styled.About>
+          <Styled.About>{rating.description}</Styled.About>
         </Styled.Description>
       </Styled.Content>
 

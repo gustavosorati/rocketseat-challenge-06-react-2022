@@ -15,7 +15,7 @@ type Props = {
   urlReference: string
 }
 
-interface IBookRead extends IBook {
+type IBookRead = IBaseBook  & {
   rate: number;
 }
 
@@ -35,7 +35,7 @@ export function LatestRead({title, urlReference}: Props) {
       const getLatestRead = async () => {
         try {
           setIsLoading(true);
-          const response = await api.get<IRequest>(`/ratings/user-latest`);
+          const response = await api.get<IRequest>(`/ratings/user-last`);
           
           if(response.data){
             const filteredReading = {
@@ -55,7 +55,6 @@ export function LatestRead({title, urlReference}: Props) {
       getLatestRead()
     }
   }, [session?.data?.user]);
-
 
   if(!session?.data) return null;
 

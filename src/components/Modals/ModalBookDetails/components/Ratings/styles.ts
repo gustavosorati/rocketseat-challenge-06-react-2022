@@ -1,5 +1,14 @@
-import { Box } from "@/components/Box"
+import { Box as BoxComponent } from "@/components/Box"
 import { styled } from "@/styles/stitches.config"
+import Link from 'next/link'
+
+export const Box = styled(BoxComponent, {
+  cursor: 'pointer',
+
+  '&:hover': {
+    background: '$gray600'
+  }
+});
 
 export const ReviewContainer = styled('div', {
   width: '100%',

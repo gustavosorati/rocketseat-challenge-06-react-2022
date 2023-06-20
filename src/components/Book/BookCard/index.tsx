@@ -1,20 +1,27 @@
 import Image from 'next/image';
 
-import { IBook } from '@/interface/IBooks';
+import { IBaseBook } from '@/interface/IBooks';
 
 import { Box } from "@/components/Box";
 import { AvaliationStars } from '@/components/Generics/AvaliationStars';
 
 import * as S from './styles';
+import { publishedDateFormat } from '@/utils/published-date-format';
 
 interface Props {
-  book: (IBook & {
+  book: (IBaseBook & {
     rate: number;
   })
 }
 
 export function BookCard({book}: Props) {
+
   const book_image = book?.cover_url?.replace('public', '');
+  const formated_date = publishedDateFormat(book.created_at);
+
+  console.log(book)
+
+  if(!book.id) return null;
 
   return (
     <Box>
@@ -32,7 +39,7 @@ export function BookCard({book}: Props) {
       />
 
       <S.Description>
-        <S.PublishedAt>Há {book.created_at} dias</S.PublishedAt>
+        <S.PublishedAt>{formated_date}</S.PublishedAt>
 
         <S.Title>{book.name}</S.Title>
         <S.Author>{book.author}</S.Author>

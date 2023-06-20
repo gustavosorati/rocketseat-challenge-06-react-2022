@@ -6,6 +6,11 @@ export const SectionHeader = styled('header', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: "space-between",
+
+  'button': {
+    all: 'unset',
+    border: "none"
+  }
 })
 
 export const SectionHeaderLink = styled(Link, {

@@ -6,7 +6,6 @@ import { ChartLineUp, Binoculars, User } from "@phosphor-icons/react";
 import * as Styled from "./styles";
 import { ProfileOrSignIn } from "./components/ProfileOrSignIn";
 import { Link } from "./components/Link";
-import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { ModalSignIn } from "../Modals/ModalSignIn";
 
@@ -65,7 +64,7 @@ export function Navbar() {
             <Link 
               key={link.id}
               text={link.text}
-              href={link.href}
+              href={`${link.href}/${session.data.id}`}
               icon={link.icon}
             />
         ))}

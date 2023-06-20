@@ -1,29 +1,37 @@
+import { useRouter } from 'next/router'
 import { useModal } from '@/hooks/useModal';
 import { useSession } from 'next-auth/react';
 
-import { IRatingWithUser } from '@/interface/IBooks'
+import { IBaseRating, IBaseUser } from '@/interface/IBooks'
 
 import { Post } from '../Post'
-import { Box } from '@/components/Box'
 import { Avatar } from '@/components/Avatar'
 import { SectionHeader } from '@/components/Generics/SectionHeader'
 import { AvaliationStars } from '@/components/Generics/AvaliationStars'
 
 import * as S from './styles'
+import { publishedDateFormat } from '@/utils/published-date-format';
 
 interface Props {
-  ratings: IRatingWithUser[];
-  uploadRating: (description: string) => void;
+  ratings: (IBaseRating & {
+    user: IBaseUser;
+  })[];
   isAvailableForRating: boolean;
   setIsAvailableForRating: (status: boolean) => void;
+  uploadRating: (description: string, rate: number) => void;
 }
 
-export function Ratings({ratings, isAvailableForRating, setIsAvailableForRating, uploadRating}: Props) {
-  const { data } = useSession();
-  const { setSignInModal } = useModal();
-
-  const userPost = ratings ? ratings.find(rating => rating.user.email === data?.user?.email) : null;
-  const otherPosts = ratings ? ratings.filter(rating => rating.user.email !== data?.user?.email) : null;
+export function Ratings({ 
+  ratings, 
+  uploadRating,
+  isAvailableForRating, 
+  setIsAvailableForRating, 
+}: Props) {
+  const {data} = useSession();
+  const { setSignInModal, setDetailsModal } = useModal();
+  
+  const userPost = ratings ? ratings.find(rating => rating.user_id === data?.id) : null;
+  const otherPosts = ratings ? ratings.filter(rating => rating.user_id !== data?.id) : null;
 
   async function handleReview() {
     if(!data?.user) {
@@ -40,6 +48,14 @@ export function Ratings({ratings, isAvailableForRating, setIsAvailableForRating,
     setIsAvailableForRating(true);
   }
 
+  const router = useRouter();
+
+  async function handleRedirect(userId: string) {
+    setDetailsModal(false);
+    router.push(`/profile/${userId}`);
+  }
+
+  console.log(data)
   return (
     <S.ReviewsWrapper>
       <SectionHeader>
@@ -47,65 +63,72 @@ export function Ratings({ratings, isAvailableForRating, setIsAvailableForRating,
         <button onClick={handleReview}>Avaliar</button>
       </SectionHeader>        
 
-      {isAvailableForRating && (
+      {isAvailableForRating && ( 
         <Post 
-          avatar_url={data?.avatar_url!} 
           name={data?.name!}
           uploadRating={uploadRating}
+          avatar_url={data?.avatar_url!} 
         />
       )}
 
       {userPost && (
-        <Box key={userPost.rating.id} direction="column">
+        <S.Box 
+          key={userPost.rate} 
+          direction="column"
+          onClick={() => handleRedirect(userPost.user_id)}
+        >
           <SectionHeader>
             <S.Profile>
               <Avatar 
-                src={userPost.user.avatar_url}
-                alt={userPost.user.name}
                 width={40}
                 height={40}
+                alt={userPost.user.name}
+                src={userPost.user.avatar_url}
               />
 
               <div>
                 <S.Title>{userPost.user.name}</S.Title>
-                <S.PublishedAt>{userPost.rating.created_at}</S.PublishedAt>
+                <S.PublishedAt>{publishedDateFormat(userPost.created_at)}</S.PublishedAt>
               </div>
             </S.Profile>
 
-            <AvaliationStars bookRating={userPost.rating.rate}/>
+            <AvaliationStars bookRating={userPost.rate}/>
           </SectionHeader>
 
-          <p>{userPost.rating.description}</p>
-        </Box>
+          <p>{userPost.description}</p>
+        </S.Box>
       )}
 
-      {otherPosts 
-        && otherPosts.map(post => 
+      {otherPosts && otherPosts.map(post => 
         (
-          <Box key={post.rating.id} direction="column">
+          <S.Box 
+            key={post.user.id} 
+            direction="column"
+            onClick={() => handleRedirect(post.user_id)}
+          >
             <SectionHeader>
               <S.Profile>
                 <Avatar 
-                  src={post.user.avatar_url}
-                  alt={post.user.name}
                   width={40}
                   height={40}
+                  alt={post.user.name}
+                  src={post.user.avatar_url}
                 />
 
                 <div>
                   <S.Title>{post.user.name}</S.Title>
-                  <S.PublishedAt>{post.rating.created_at}</S.PublishedAt>
+                  <S.PublishedAt>{publishedDateFormat(post.created_at)}</S.PublishedAt>
                 </div>
               </S.Profile>
 
-              <AvaliationStars bookRating={post.rating.rate}/>
+              <AvaliationStars bookRating={post.rate}/>
             </SectionHeader>
 
-            <p>{post.rating.description}</p>
-          </Box>
+            <p>{post.description}</p>
+          </S.Box>
         )) 
       }
-
     </S.ReviewsWrapper>
   )
 }
+

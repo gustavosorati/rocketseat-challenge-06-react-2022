@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
 import { ReactNode } from "react";
+import { useRouter } from "next/router";
 import { LinkContainer } from "./styles";
 
 type Props = {
@@ -11,10 +11,14 @@ type Props = {
 export function Link({text, href, icon}: Props) {
   const {pathname} = useRouter();
 
+  const isActive = href.includes('/profile') 
+    ? pathname.includes('/profile') 
+    : pathname === href;
+
   return (
     <LinkContainer 
       href={href}
-      active={pathname.includes(href)}  
+      active={isActive}  
     > 
       {icon}
       {text}

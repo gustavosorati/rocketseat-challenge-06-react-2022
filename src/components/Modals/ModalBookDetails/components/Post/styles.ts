@@ -65,3 +65,15 @@ export const Button = styled('button', {
   }
 
 })
+
+interface Props {
+
+}
+
+export const Teste = styled('div', {
+  width: '100%',
+  height: '16px',
+  position: 'absolute'
+  // background: 'red',
+
+})

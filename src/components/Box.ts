@@ -12,6 +12,7 @@ export const Box = styled('div', {
 
   display: 'flex',
   gap: '$5',
+  marginBottom: '1rem',
 
   transition: 'background 200ms',
   

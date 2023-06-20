@@ -29,4 +29,4 @@ export const InfoContainer = styled('div', {
   flexDirection: 'column',
   alignItems: "center",
   justifyContent: 'center',
-})
+});

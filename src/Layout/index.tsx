@@ -10,6 +10,7 @@ interface Props {
   icon: ReactNode;
   children: ReactNode;
 }
+
 export default function DefaultLayout({ title, icon, children }: Props) {
   return (
     <S.Container>

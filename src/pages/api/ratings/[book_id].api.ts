@@ -17,8 +17,6 @@ export default async function handler(
     buildNextAuthOptions(req, res),
   )
 
-  // console.log(session)
-
   const bookId = req.query.book_id as string;
 
 	const ratings = await prisma.rating.findMany({
@@ -32,6 +30,7 @@ export default async function handler(
     ],
     include: {
       user: true,
+      book: true
     }
   });
 

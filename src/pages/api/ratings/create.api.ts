@@ -7,6 +7,7 @@ import { buildNextAuthOptions } from '../auth/[...nextauth].api';
 const createRatingSchema = z.object({
   description: z.string(),
   book_id: z.string(),
+  rate: z.number(),
 })
 
 export default async function handler(
@@ -24,7 +25,7 @@ export default async function handler(
   )
   if(!session) return;
 
-  const {description, book_id} = createRatingSchema.parse(req.body);
+  const {description, book_id, rate} = createRatingSchema.parse(req.body);
   
   const userAlreadyRatingBook = await prisma.rating.findFirst({
     where: {
@@ -42,7 +43,7 @@ export default async function handler(
     data: {
       book_id,
       description,
-      rate: 1,
+      rate: rate,
       user_id: session.id
     }
   });

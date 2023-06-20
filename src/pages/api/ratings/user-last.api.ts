@@ -23,7 +23,7 @@ export default async function handler(
     })
   }
 
-	const ratings = await prisma.rating.findMany({
+	const rating = await prisma.rating.findFirst({
     where: {
       user_id: session.id
     },
@@ -35,9 +35,20 @@ export default async function handler(
     include: {
       book: true
     },
-    take: 10
   });
 
+  const content = {
+    book: rating?.book,
+    rating: {
+      id: rating?.id,
+      rate: rating?.rate,
+      description: rating?.description,
+      created_at: rating?.created_at,
+      book_id: rating?.book_id,
+      user_id: rating?.user_id,
+    }
+  }
+  
 
-	return res.status(200).json({ratings})
+	return res.status(200).json(content)
 }
